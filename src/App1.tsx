@@ -52,14 +52,14 @@ function App1() {
                         <Text style={styles.text5}>
                             Chicken Manchurian
                         </Text>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={styles.text6}>
-                            Chinese Cuisine
-                        </Text>
-                        <View style={{marginRight:-60, marginBottom: 12}}>
-                            <Image style={styles.rect12} source={require("./assets/icons/Rectangle12.png")}/>
-                            <Image style={{marginTop:-37, marginLeft:20}} source={require("./assets/icons/Vector3.png")}/>
-                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={styles.text6}>
+                                Chinese Cuisine
+                            </Text>
+                            <View style={{ marginRight: -60, marginBottom: 12 }}>
+                                <Image style={styles.rect12} source={require("./assets/icons/Rectangle12.png")} />
+                                <Image style={{ marginTop: -37, marginLeft: 20 }} source={require("./assets/icons/Vector3.png")} />
+                            </View>
                         </View>
                         <Text style={styles.text7}>
                             $110.50
