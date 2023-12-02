@@ -1,248 +1,169 @@
-// import React, { useState } from "react";
-// import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-// const arrBut = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0'];
-// const arrOp = ['+', '-', '*', '/', '='];
-// function Calculator() {
-//     const [firstNumber, setFirstNumber] = useState("");
-//     const [secondNumber, setSecondNumber] = useState("");
-//     const [operator, setOperator] = useState("");
-//     const [result, setResult] = useState(0);
-//     console.log("1", firstNumber);
-//     console.log("2", secondNumber);
-//     console.log("3", operator);
-//     const checkOperator = (a: string, b: string, opr: string) => {
-//         switch (opr) {
-//             case "+":
-//                 return +a + +b;
-//             case "-":
-//                 return +a - +b;
-//             case "*":
-//                 return +a * +b;
-//             case "/":
-//                 return +a / +b;
-//             default:
-//                 break;
-//         }
-//     }
-//     const numberPress = (num: string) => {
-//         if (!secondNumber && !operator) {
-//             setFirstNumber(firstNumber + num);
-//             setResult(firstNumber + num);
-//         } else if (operator) {
-//             setSecondNumber(secondNumber + num);
-//             setResult(secondNumber + num);
-//         }
-//     };
-//     const operatorPress = (opr: string) => {
-//         if (firstNumber && secondNumber) {
-//             const oprResult = checkOperator(firstNumber, secondNumber, operator)
-//             setResult(oprResult);
-//             setFirstNumber(oprResult);
-//             setSecondNumber("");
-//             setOperator("");
-//         }
-//         console.log(opr);
-//         setOperator(opr);
-//     };
-//     return (
-//         <SafeAreaView style={styles.container}>
-//             <View style={styles.result}>
-//                 <Text style={styles.resultText}>{result}</Text>
-//             </View>
-//             <View style={styles.actionArea}>
-//                 {arrBut.map((item, index) => {
-//                     return (
-//                         <TouchableOpacity
-//                             key={index}
-//                             style={styles.button}
-//                             onPress={() => numberPress(item)}>
-//                             <Text style={styles.buttonText}>{item}</Text>
-//                         </TouchableOpacity>
-//                     );
-//                 })}
-//             </View>
-//             <View style={styles.oprArea}>
-//                 {arrOp.map((item, index) => {
-//                     return (
-//                         <TouchableOpacity
-//                             key={index}
-//                             style={styles.oprButton}
-//                             onPress={() => operatorPress(item)}>
-//                             <Text style={styles.buttonText}>{item}</Text>
-//                         </TouchableOpacity>
-//                     );
-//                 })}
-//             </View>
-//         </SafeAreaView>
-//     )
-// }
-
-// export default Calculator;
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//     },
-//     result: {
-//         backgroundColor: "white",
-//         flex: 0.25,
-//         justifyContent: "flex-end",
-//         alignItems: "flex-end"
-//     },
-//     resultText: {
-//         fontSize: 52,
-//         color: "black",
-//         fontWeight: "bold"
-//     },
-//     actionArea: {
-//         flex: 1,
-//         backgroundColor: "#F7F9D1",
-//         flexDirection: "column",
-//     },
-//     button: {
-//         width: 100,
-//         height: 100,
-//         backgroundColor: "#E4E88C",
-//         justifyContent: "center",
-//         alignItems: "center",
-//         borderRadius: 50,
-//         borderWidth: 1,
-//     },
-//     buttonText: {
-//         fontSize: 40,
-//         color: "black",
-//     },
-//     oprArea: {
-//         width: "30%",
-//         alignItems: "center",
-//     },
-//     oprButton: {
-//         marginLeft: 550,
-//         width: 100,
-//         height: 100,
-//         backgroundColor: "#E4E88C",
-//         justifyContent: "center",
-//         alignItems: "center",
-//         borderRadius: 50,
-//     },
-// })
-
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-
-const Calculator = () => {
-  const [displayValue, setDisplayValue] = useState('0');
-  const [firstOperand, setFirstOperand] = useState(null);
-  const [operator, setOperator] = useState(null);
-  const [waitingForSecondOperand, setWaitingForSecondOperand] = useState(false);
-
-  const handleInput = (input) => {
-    if (waitingForSecondOperand) {
-      setDisplayValue(String(input));
-      setWaitingForSecondOperand(false);
-    } else {
-      setDisplayValue(displayValue === '0' ? String(input) : displayValue + input);
+const arrButtons = ['8', '9', '6', '7', '4', '5', '2', '3', '0', '1'];
+const arrOperators = ['+', '-', '*', '/', '='];
+function Calculator() {
+    const [firstNumber, setFirstNumber] = useState("");
+    const [secondNumber, setSecondNumber] = useState("");
+    const [operator, setOperator] = useState("");
+    const [result, setResult] = useState("0");
+    console.log("1", firstNumber);
+    console.log("2", secondNumber);
+    console.log("3", operator);
+    const checkOperator = (a: string, b: string, opr: string) => {
+        switch (opr) {
+            case "+":
+                return +a + +b;
+            case "-":
+                return +a - +b;
+            case "*":
+                return +a * +b;
+            case "/":
+                return +a / +b;
+            default:
+                break;
+        }
     }
-  };
+    const numberPress = (num: string) => {
+        if (!secondNumber && !operator) {
+            setFirstNumber(firstNumber + num);
+            setResult(firstNumber + num);
+        } else if (operator) {
+            setSecondNumber(secondNumber + num);
+            setResult(secondNumber + num);
+        }
+    };
 
-  const handleOperator = (nextOperator) => {
-    const inputValue = parseFloat(displayValue);
-
-    if (firstOperand === null) {
-      setFirstOperand(inputValue);
-    } else if (operator) {
-      const result = performCalculation();
-      setDisplayValue(String(result));
-      setFirstOperand(result);
+    const operatorPress = (opr: string) => {
+        if (firstNumber && secondNumber) {
+            const oprResult = checkOperator(firstNumber, secondNumber, operator)
+            setResult(String(oprResult));
+            setFirstNumber(String(oprResult));
+            setSecondNumber("");
+            setOperator("");
+        }
+        console.log(opr);
+        setOperator(opr);
+    };
+    const clear = () => {
+        setResult("0");
+        setFirstNumber("");
+        setSecondNumber("");
+        setOperator("");
     }
+    return (
+        <SafeAreaView style={styles.area}>
 
-    setWaitingForSecondOperand(true);
-    setOperator(nextOperator);
-  };
-
-  const handleEqual = () => {
-    const inputValue = parseFloat(displayValue);
-
-    if (firstOperand !== null && operator) {
-      const result = performCalculation();
-      setDisplayValue(String(result));
-      setFirstOperand(result);
-      setOperator(null);
-      setWaitingForSecondOperand(true);
-    }
-  };
-
-  const performCalculation = () => {
-    const inputValue = parseFloat(displayValue);
-    const inputValue1 = firstOperand;
-
-    switch (operator) {
-      case '+':
-        return inputValue1 + inputValue;
-      case '-':
-        return inputValue1 - inputValue;
-      case '*':
-        return inputValue1 * inputValue;
-      case '/':
-        return inputValue1 / inputValue;
-      default:
-        return inputValue;
-    }
-  };
-
-  const handleClear = () => {
-    setDisplayValue('0');
-    setFirstOperand(null);
-    setOperator(null);
-    setWaitingForSecondOperand(false);
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.display}>{displayValue}</Text>
-      <View style={styles.row}>
-        <Button title="1" onPress={() => handleInput(1)} />
-        <Button title="2" onPress={() => handleInput(2)} />
-        <Button title="3" onPress={() => handleInput(3)} />
-        <Button title="/" onPress={() => handleOperator('/')} />
-      </View>
-      <View style={styles.row}>
-        <Button title="4" onPress={() => handleInput(4)} />
-        <Button title="5" onPress={() => handleInput(5)} />
-        <Button title="6" onPress={() => handleInput(6)} />
-        <Button title="*" onPress={() => handleOperator('*')} />
-      </View>
-      <View style={styles.row}>
-        <Button title="7" onPress={() => handleInput(7)} />
-        <Button title="8" onPress={() => handleInput(8)} />
-        <Button title="9" onPress={() => handleInput(9)} />
-        <Button title="-" onPress={() => handleOperator('-')} />
-      </View>
-      <View style={styles.row}>
-        <Button title="C" onPress={handleClear} />
-        <Button title="0" onPress={() => handleInput(0)} />
-        <Button title="=" onPress={handleEqual} />
-        <Button title="+" onPress={() => handleOperator('+')} />
-      </View>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  display: {
-    fontSize: 36,
-    textAlign: 'right',
-    margin: 10,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-});
+            <View style={styles.result}>
+                <Text style={styles.resultText}>{result}</Text>
+            </View>
+            <View style={styles.actionArea}>
+                <View style={styles.container}>
+                    <View style={styles.buttons}>
+                        {arrButtons.map((item, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                style={styles.button}
+                                onPress={() => numberPress(item)}>
+                                <Text style={styles.buttonText}> {item} </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                    <View style={styles.oprArea}>
+                        <TouchableOpacity
+                            style={[styles.oprButton, { backgroundColor: "#8BBD6C" }]}
+                            onPress={clear}>
+                            <Text style={styles.clear}> C </Text>
+                            
+                        </TouchableOpacity>
+                        {arrOperators.map((item, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                style={styles.oprButton}
+                                onPress={() => operatorPress(item)} >
+                                <Text style={styles.buttonText}> {item} </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </View>
+            </View>
+        </SafeAreaView>
+    );
+}
 
 export default Calculator;
+
+const styles = StyleSheet.create({
+    area: {
+        flex: 1,
+        backgroundColor: "#D4EEC4",
+    },
+    result: {
+        backgroundColor: "#D4EEC4",
+        flex: 0.3,
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+    },
+    resultText: {
+        fontSize: 60,
+        color: "black",
+        fontWeight: "bold",
+        marginRight: 20
+    },
+    actionArea: {
+        flex: 0.7
+    },
+    buttons: {
+        backgroundColor: "#6BBB3A",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        width: "65%",
+        alignContent: 'space-between',
+        justifyContent: "space-between",
+        padding: 15,
+        borderTopLeftRadius: 25,
+        borderWidth: 1
+    },
+    button: {
+        width: 100,
+        height: 100,
+        backgroundColor: "#B6D7A3",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 45,
+        borderWidth: 1,
+    },
+    buttonText: {
+        fontSize: 40,
+        color: "black",
+    },
+    container: {
+        flexDirection: "row",
+        flex: 1
+    },
+    oprArea: {
+        width: "35%",
+        padding: 25,
+        justifyContent: 'space-between',
+        backgroundColor: "#87D358",
+        borderTopRightRadius: 25,
+        borderWidth: 1
+    },
+    clear: {
+        color: "#0A36A4",
+        fontWeight: "900",
+        fontSize: 45
+    },
+    oprButton: {
+        width: 85,
+        padding: 10,
+        height: 85,
+        backgroundColor: "#A9E286",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 35,
+        borderWidth: 1,
+
+    },
+})

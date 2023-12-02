@@ -1,11 +1,15 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+function Home() {
+    const navigation=useNavigation();
 
-function App1() {
     return (
         <SafeAreaView style={styles.area}>
             <View style={styles.header}>
+                <TouchableOpacity onPress={()=>{navigation.dispatch(DrawerActions.toggleDrawer())}}>
                 <Image source={require("./assets/icons/Menuicon.png")} />
+                </TouchableOpacity>
                 <View style={styles.search}>
                     <Image style={{ marginRight: 24 }} source={require("./assets/icons/Search.png")} />
                     <Image source={require("./assets/icons/ShoppingCartIcon.png")} />
@@ -30,11 +34,11 @@ function App1() {
             </View>
             <View style={{ padding: 10 }}>
                 <ScrollView horizontal={true} >
-                    <View style={styles.image}>
+                    <TouchableOpacity style={styles.image}>
                         <Image style={{ margin: 15 }} source={require("./assets/images/RiceCard.png")} />
                         <Image style={{ margin: 15 }} source={require("./assets/images/ZingerCard.png")} />
                         <Image style={{ margin: 15 }} source={require("./assets/images/RiceCard.png")} />
-                    </View>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
 
@@ -57,8 +61,8 @@ function App1() {
                                 Chinese Cuisine
                             </Text>
                             <View style={{ marginRight: -60, marginBottom: 12 }}>
-                                <Image style={styles.rect12} source={require("./assets/icons/Rectangle12.png")} />
-                                <Image style={{ marginTop: -37, marginLeft: 20 }} source={require("./assets/icons/Vector3.png")} />
+                                {/* <Image style={styles.rect12} source={require("./assets/icons/Rectangle12.png")} />
+                                <Image style={{ marginTop: -37, marginLeft: 20 }} source={require("./assets/icons/Vector3.png")} /> */}
                             </View>
                         </View>
                         <Text style={styles.text7}>
@@ -72,7 +76,7 @@ function App1() {
         </SafeAreaView>
     )
 }
-export default App1;
+export default Home;
 
 const styles = StyleSheet.create({
     area: {
@@ -168,5 +172,3 @@ const styles = StyleSheet.create({
     }
 
 })
-
-///Food App "page1"
